@@ -100,6 +100,7 @@ FROM   reviewers
        LEFT JOIN reviews 
               ON reviewers.id = reviews.reviewer_id 
 GROUP  BY reviewers.id; 
+
 -- TV joins Challenge 6 Alternative
 SELECT first_name, 
        last_name, 
@@ -112,3 +113,15 @@ FROM   reviewers
        LEFT JOIN reviews 
               ON reviewers.id = reviews.reviewer_id 
 GROUP  BY reviewers.id; 
+
+-- TV joins Challenge 7
+select 
+    title, 
+    rating, 
+    concat(first_name,' ', last_name) as reviewer
+from reviewers
+inner join reviews
+    on reviewers.id = reviews.reviewer_id
+inner join series 
+    on series.id = reviews.series_id
+order by title;
