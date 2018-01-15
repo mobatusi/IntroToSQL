@@ -61,7 +61,7 @@ INSERT INTO reviews(series_id, reviewer_id, rating) VALUES
 
 -- TV joins challenge 1 
 select title, rating from series
-	right join reviews on series.id = reviews.series_id;
+    right join reviews on series.id = reviews.series_id;
 
 -- TV joins Challenge 2
 select title, avg(rating) as avg_rating from series
@@ -82,3 +82,33 @@ select title as unreviewed_series from series
 select genre, round(avg(rating), 2) as avg_rating from series
     join reviews on series.id = reviews.series_id
     group by genre;
+
+-- TV joins Challenge 6
+
+SELECT first_name, 
+       last_name, 
+       Count(rating)                    AS COUNT, 
+       Ifnull(Min(rating), 0)           AS MIN, 
+       Ifnull(Max(rating), 0)           AS MAX, 
+       Round(Ifnull(Avg(rating), 0), 2) AS AVG, 
+       CASE 
+         WHEN Count(rating) >= 10 THEN 'POWER USER' 
+         WHEN Count(rating) > 0 THEN 'ACTIVE' 
+         ELSE 'INACTIVE' 
+       end                              AS STATUS 
+FROM   reviewers 
+       LEFT JOIN reviews 
+              ON reviewers.id = reviews.reviewer_id 
+GROUP  BY reviewers.id; 
+-- TV joins Challenge 6 Alternative
+SELECT first_name, 
+       last_name, 
+       Count(rating)                               AS COUNT, 
+       Ifnull(Min(rating), 0)                      AS MIN, 
+       Ifnull(Max(rating), 0)                      AS MAX, 
+       Round(Ifnull(Avg(rating), 0), 2)            AS AVG, 
+       IF(Count(rating) > 0, 'ACTIVE', 'INACTIVE') AS STATUS 
+FROM   reviewers 
+       LEFT JOIN reviews 
+              ON reviewers.id = reviews.reviewer_id 
+GROUP  BY reviewers.id; 
