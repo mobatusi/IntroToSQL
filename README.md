@@ -1,0 +1,2 @@
+# IntroToSQL
+MySQL learning exercises 
